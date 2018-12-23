@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
     onChangeText: ((text: string) => void);
@@ -10,21 +10,23 @@ type Props = {
     editable?: boolean;
     keyboardType?: any | "default",
     maxLength?: number,
+    addViewStyle?: object, 
     addStyle?: object,
-    icon?: any
+    icon?: any,
+    color?: string
 }
 
 export default (props: Props) => {
     return (
-        <View style={{
+        <View style={[{
             flex: 1,
             padding: 5,
             elevation: 8,
             borderRadius: 5,
             borderColor: '#FFF',
             flexDirection: 'row',
-            backgroundColor: '#FFF',
-        }}>
+            backgroundColor: '#FFF'
+            }, props.addViewStyle ]}>
             <TextInput
                 value={props.value}
                 editable={props.editable}
@@ -41,7 +43,7 @@ export default (props: Props) => {
                         paddingLeft: 20,
                         paddingRight: 20,
                         color: '#2D2D2D',
-                        fontFamily: 'Ubuntu-Regular'
+                        fontFamily: 'Ubuntu-Regular',
                     }, props.addStyle]}
             />
             <View
@@ -54,7 +56,8 @@ export default (props: Props) => {
                 }}
             >
                 <Icon
-                    name='home'
+                    name={props.icon}
+                    color={props.color}
                     size={25}
                 />
             </View>

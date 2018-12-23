@@ -2,18 +2,17 @@ import React from 'react';
 import { View } from 'react-native';
 
 type Props = {
-    styleSection?: object,
+    addStyle?: object,
     children?: any
 }
 export default (props: Props) => {
     return (
         <View style={[{
-            paddingTop: 10,
+            paddingVertical: 10,
             paddingHorizontal: 20,
-            position: 'relative',
             flexDirection: 'row',
             justifyContent: 'center',
-        }, props.styleSection
+        }, props.addStyle
         ]}
         >
             {props.children}
