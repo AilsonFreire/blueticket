@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
     onChangeText: ((text: string) => void);
+    onBlur?: (() => void);
     placeholder?: string;
     secureTextEntry?: boolean;
     value?: string;
@@ -32,6 +33,7 @@ export default (props: Props) => {
                 editable={props.editable}
                 autoCorrect={false}
                 placeholder={props.placeholder}
+                onBlur={props.onBlur}
                 onChangeText={props.onChangeText}
                 keyboardType={props.keyboardType}
                 underlineColorAndroid='transparent'
