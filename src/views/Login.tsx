@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Input from '../components/Input';
 import Card from '../components/Card';
 import CardSection from '../components/CardSection';
 import Text from '../components/Text';
+import Button from '../components/Button';
 
 import { validateEmail, validatePassword } from '../helpers/Validate'
 
@@ -21,7 +22,9 @@ class Login extends React.PureComponent {
         password: '',
         msgErrorEmail: '',
         msgErrorPassword: '',
-        lock: true
+        msgAlert: '',
+        lock: true,
+        alert: false
     }
 
     handleEmail = (email: string) => {
@@ -44,6 +47,32 @@ class Login extends React.PureComponent {
 
     handleLock = () => {
         this.setState({ lock: !this.state.lock })
+    }
+
+    showAlert = () => {
+        if (this.state.alert) {
+            return (
+                Alert.alert(
+                    'Blueticket',
+                    `${this.state.msgAlert}`,
+                    [
+                        { text: 'OK', onPress: () => this.setState({ alert: false, msgAlert: '' }) },
+                    ],
+                    { cancelable: false }
+                )
+            )
+        }
+    }
+
+    login = () => {
+        const { email, password, msgErrorEmail, msgErrorPassword } = this.state;
+        if (email === '' || password ===  '') {
+            this.setState({ alert: true, msgAlert: 'Preencha todos os campos' })
+        } else if (msgErrorEmail !== '' || msgErrorPassword !== '') {
+            this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente' })
+        } else {
+            
+        }
     }
 
     render() {
@@ -73,6 +102,7 @@ class Login extends React.PureComponent {
                             <Text text={msgErrorEmail} />
                         </CardSection> : null
                     }
+                    {this.showAlert()}
                     <CardSection>
                         <Input
                             onChangeText={(password) => this.handlePassword(password)}
@@ -101,7 +131,20 @@ class Login extends React.PureComponent {
                             </CardSection>
                         </TouchableOpacity>
                     }
-
+                    <CardSection>
+                        <Button
+                            onPress={() => this.login()}
+                            text="Entrar"
+                            styleText={{
+                                fontSize: 16,
+                                color: '#fff',
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                alignSelf: 'center',
+                                fontFamily: 'Ubuntu-Medium',
+                            }}
+                        />
+                    </CardSection>
                 </Card>
             </LinearGradient>
         )
