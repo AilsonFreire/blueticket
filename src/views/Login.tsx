@@ -7,6 +7,7 @@ import Card from '../components/Card';
 import CardSection from '../components/CardSection';
 import Text from '../components/Text';
 import Button from '../components/Button';
+import Loading from '../components/Loading';
 
 import api from '../services/api';
 import { onSignIn } from '../Auth';
@@ -26,6 +27,7 @@ class Login extends React.PureComponent {
         msgErrorEmail: '',
         msgErrorPassword: '',
         msgAlert: '',
+        loading: false,
         lock: true,
         alert: false
     }
@@ -67,12 +69,21 @@ class Login extends React.PureComponent {
         }
     }
 
+    showSpinner = () => {
+        if (this.state.loading) {
+            return (
+                <Loading />
+            )
+        }
+    }
+
     validateLogin = () => {
+        this.setState({ loading: true })
         const { email, password, msgErrorEmail, msgErrorPassword } = this.state;
 
         const validate = validateLogin(email, password, msgErrorEmail, msgErrorPassword);
         if (!validate) {
-            this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente ' });
+            this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente ', loading: false });
         } else {
             this.login(email, password);
         }
@@ -88,14 +99,14 @@ class Login extends React.PureComponent {
 
             const { access_token } = response.data;
             const token = access_token;
-            console.log(token)
             try {
+                this.setState({ loading: false });
                 await onSignIn(token).then(() => this.props.navigation.navigate('SignedIn'));
             } catch (error) {
-                this.setState({ alert: true, msgAlert: 'Não foi possivel logar. Tente novamente' });
+                this.setState({ alert: true, msgAlert: 'Não foi possivel logar. Tente novamente', loading: false });
             }
         } catch (error) {
-            this.setState({ alert: true, msgAlert: 'Acesso negado' });
+            this.setState({ alert: true, msgAlert: 'Acesso negado', loading: false });
         }
     }
 
@@ -127,6 +138,7 @@ class Login extends React.PureComponent {
                         </CardSection> : null
                     }
                     {this.showAlert()}
+                    {this.showSpinner()}
                     <CardSection>
                         <Input
                             onChangeText={(password) => this.handlePassword(password)}

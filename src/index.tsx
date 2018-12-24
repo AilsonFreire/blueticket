@@ -11,7 +11,7 @@ class App extends React.Component {
   async componentDidMount() {
     isSignedIn()
       .then((res: any) => this.setState({ signedIn: res, checkedSignIn: true }))
-      .catch((err: any) => alert("An error occurred"));
+      .catch((err: any) => console.log(err));
   }
 
   render() {

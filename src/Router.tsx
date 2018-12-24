@@ -1,7 +1,7 @@
 import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import Login from "./views/Login";
 import Home from "./views/authorized/Home";
-import Logout from "./views/authorized/Logout"
+import Logout from "./views/authorized/Logout";
 
 
 export const UnauthorizedScreens = createStackNavigator(
