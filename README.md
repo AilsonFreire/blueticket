@@ -1,5 +1,5 @@
-# :iphone: Blueticket - Teste de seleção · 
-Clean and minimalist React Native template for a quick start with TypeScript.
+# :iphone: Blueticket - Teste de seleção
+Aplicativo feito em React-native usando typescript como requisito para a seleção na empresa blueticket.
 
 [![Header](https://cdn-images-1.medium.com/max/500/1*E9RnPOATuhjuNrlFkv5oSg.jpeg)](https://medium.com/@emin93/react-native-typescript-b965059109d3)
 
