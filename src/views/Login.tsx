@@ -1,12 +1,14 @@
 import React from 'react';
-import { Image, TouchableOpacity, Alert } from 'react-native';
+import { Image, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 import Input from '../components/Input';
 import Card from '../components/Card';
 import CardSection from '../components/CardSection';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
+import api from '../services/api';
 import { validateEmail, validatePassword } from '../helpers/Validate'
 
 const logo = require('../assets/images/logo.png');
@@ -64,14 +66,33 @@ class Login extends React.PureComponent {
         }
     }
 
-    login = () => {
+    validateLogin = () => {
         const { email, password, msgErrorEmail, msgErrorPassword } = this.state;
-        if (email === '' || password ===  '') {
+        if (email === '' || password === '') {
             this.setState({ alert: true, msgAlert: 'Preencha todos os campos' })
         } else if (msgErrorEmail !== '' || msgErrorPassword !== '') {
             this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente' })
         } else {
-            
+            this.login(email, password);
+        }
+    }
+
+    login = async (email: string, password: string) => {
+        try {
+            const response = await api.post('/auth/login', {
+                email,
+                password
+            });
+
+            const { access_token } = response.data;
+            const token = access_token;
+            try {
+                await AsyncStorage.setItem('@Blueticket:token', token);
+            } catch (error) {
+                this.setState({ alert: true, msgAlert: 'Não foi possivel logar. Tente novamente' });
+            }
+        } catch (error) {
+            this.setState({ alert: true, msgAlert: 'Acesso negado' });
         }
     }
 
@@ -133,7 +154,7 @@ class Login extends React.PureComponent {
                     }
                     <CardSection>
                         <Button
-                            onPress={() => this.login()}
+                            onPress={() => this.validateLogin()}
                             text="Entrar"
                             styleText={{
                                 fontSize: 16,
@@ -152,3 +173,5 @@ class Login extends React.PureComponent {
 }
 
 export default Login;
+
+
