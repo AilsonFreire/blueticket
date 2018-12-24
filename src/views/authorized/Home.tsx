@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Alert, AsyncStorage } from 'react-native';
+import { TouchableOpacity, Alert, AsyncStorage, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '../../services/api';
@@ -7,7 +7,7 @@ import api from '../../services/api';
 import { onSignout } from '../../Auth';
 
 import Card from '../../components/Card';
-import CardSection from '../../components/CardSection';
+import CardEvent from '../../components/CardEvent';
 import HeaderLogo from '../../components/HeaderLogo';
 import Loading from '../../components/Loading';
 
@@ -34,6 +34,7 @@ class Home extends React.PureComponent {
     };
 
     state = {
+        events: [],
         loading: true,
         alert: false,
         msgAlert: ''
@@ -64,9 +65,10 @@ class Home extends React.PureComponent {
         let response: object;
         try {
             response = await api.get('/test/events/list');
-            console.log(response.data)
+            this.setState({ events: response.data, loading: false })
         } catch (error) {
-            console.log(error)
+            this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
+            await onSignout().then(() => this.props.navigation.navigate('SignedOut'));
         }
     }
 
@@ -93,10 +95,34 @@ class Home extends React.PureComponent {
         }
     }
 
+    renderEvents = () => {
+        const { events } = this.state;
+        console.log(events)
+        if (events.length > 0) {
+            return (
+                events.map((event: object) => {
+                    const date = new Date(event.data * 1000);
+                    console.log(date)
+                    return (
+                        <CardEvent
+                            key={event.codigo}
+                            name={event.nome}
+                            local={event.local}
+                            date={date.toDateString()}
+                        />
+                    )
+                })
+            )
+        }
+    }
+
     render() {
         return (
-            <Card>
+            <Card addStyle={{ justifyContent: 'flex-start', paddingHorizontal: 10 }}>
                 {this.showSpinner()}
+                <ScrollView style={{ width: '100%' }}>
+                    {this.renderEvents()}
+                </ScrollView>
                 {this.showAlert()}
             </Card>
         )
