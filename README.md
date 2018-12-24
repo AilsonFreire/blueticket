@@ -1,5 +1,4 @@
-# :space_invader: React Native Template TypeScript · [![Build Status](https://travis-ci.org/emin93/react-native-template-typescript.svg?branch=master)](https://travis-ci.org/emin93/react-native-template-typescript)
-
+# :space_invader: Blueticket - Teste de seleção · 
 Clean and minimalist React Native template for a quick start with TypeScript.
 
 [![Header](https://cdn-images-1.medium.com/max/500/1*E9RnPOATuhjuNrlFkv5oSg.jpeg)](https://medium.com/@emin93/react-native-typescript-b965059109d3)
