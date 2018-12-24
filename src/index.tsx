@@ -1,25 +1,30 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
-import { UnauthorizedScreens, AuthorizedScreens } from "./Router";
+import { createRootNavigator } from "./Router";
+import { isSignedIn } from "./Auth";
 
-export default class App extends React.PureComponent {
+class App extends React.Component {
   state = {
-    login: false
+    signedIn: false,
+    checkedSignIn: false
   }
 
   async componentDidMount() {
-    const token = await AsyncStorage.getItem('@Blueticket:token');
-    if (token) {
-      this.setState({ login: true });
-    } else {
-      this.setState({ login: false });
-    }
+    isSignedIn()
+      .then((res: any) => this.setState({ signedIn: res, checkedSignIn: true }))
+      .catch((err: any) => alert("An error occurred"));
   }
 
   render() {
-    const { login } = this.state;
-    return (
-      login === false ? <UnauthorizedScreens /> : <AuthorizedScreens />
-    );
+    const { checkedSignIn, signedIn } = this.state;
+
+    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
+    if (!checkedSignIn) {
+      return null;
+    }
+
+    const Layout = createRootNavigator(signedIn);
+    return <Layout />;
   }
 }
+
+export default App;

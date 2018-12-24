@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Image, TouchableOpacity, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Input from '../components/Input';
@@ -7,18 +7,15 @@ import Card from '../components/Card';
 import CardSection from '../components/CardSection';
 import Text from '../components/Text';
 import Button from '../components/Button';
-import Alert from '../components/Alert';
 
 import api from '../services/api';
+import { onSignIn } from '../Auth';
 import { validateEmail, validatePassword, validateLogin } from '../helpers/Validate'
 
 const logo = require('../assets/images/logo.png');
 const blueticket = require('../assets/images/blueticket.png')
 
-type Props = {
-    response: object;
-}
-class Login extends React.PureComponent<Props> {
+class Login extends React.PureComponent {
     static navigationOptions = {
         header: null,
     };
@@ -58,7 +55,14 @@ class Login extends React.PureComponent<Props> {
     showAlert = () => {
         if (this.state.alert) {
             return (
-                <Alert onPress={() => this.setState({ alert: false })} msg={this.state.msgAlert} />
+                Alert.alert(
+                    'Blueticket',
+                    `${this.state.msgAlert}`,
+                    [
+                        { text: 'OK', onPress: () => this.setState({ alert: false, msgAlert: '' }) },
+                    ],
+                    { cancelable: false }
+                )
             )
         }
     }
@@ -84,8 +88,9 @@ class Login extends React.PureComponent<Props> {
 
             const { access_token } = response.data;
             const token = access_token;
+            console.log(token)
             try {
-                await AsyncStorage.setItem('@Blueticket:token', token);
+                await onSignIn(token).then(() => this.props.navigation.navigate('SignedIn'));
             } catch (error) {
                 this.setState({ alert: true, msgAlert: 'Não foi possivel logar. Tente novamente' });
             }

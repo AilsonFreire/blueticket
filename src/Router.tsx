@@ -1,10 +1,12 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import Login from "./views/Login";
 import Home from "./views/authorized/Home";
+import Logout from "./views/authorized/Logout"
+
 
 export const UnauthorizedScreens = createStackNavigator(
     {
-        Login
+        Login,
     }, {
         initialRouteName: "Login"
     }
@@ -12,8 +14,25 @@ export const UnauthorizedScreens = createStackNavigator(
 
 export const AuthorizedScreens = createStackNavigator(
     {
-        Home
+        Home,
+        Logout,
     },{
         initialRouteName: "Home"
     }
 );
+
+export const createRootNavigator = (signedIn = false) => {
+    return createSwitchNavigator(
+      {
+        SignedIn: {
+          screen: AuthorizedScreens
+        },
+        SignedOut: {
+          screen: UnauthorizedScreens
+        }
+      },
+      {
+        initialRouteName: signedIn ? "SignedIn" : "SignedOut"
+      }
+    );
+  };

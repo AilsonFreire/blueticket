@@ -14,7 +14,7 @@ class Home extends React.PureComponent {
             headerLeft: (
                 <TouchableOpacity
                     style={{ paddingVertical: 20, paddingLeft: 10 }}
-                    // onPress={() => navigate('DrawerOpen')}
+                    onPress={() => navigate('Logout')}
                 >
                     <Icon
                         size={25}
