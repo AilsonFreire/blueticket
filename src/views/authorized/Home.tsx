@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
+import { TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '../../services/api';
 
 import { onSignout } from '../../Auth';
 
+import Card from '../../components/Card';
+import CardSection from '../../components/CardSection';
 import HeaderLogo from '../../components/HeaderLogo';
 import Loading from '../../components/Loading';
 
@@ -43,11 +45,11 @@ class Home extends React.PureComponent {
             response = await api.get('/auth/me');
             const { pdv, pos } = response.data;
             try {
-                AsyncStorage.multiSet([
-                    '@Blueticket:pdv', pdv,
-                    '@Blueticket:pos', pos
+                await AsyncStorage.multiSet([
+                    ['@Blueticket:pdv', JSON.stringify(pdv)],
+                    ['@Blueticket:pos', JSON.stringify(pos)]
                 ]);
-                this.setState({ loading: false })
+                this.getEvents();
             } catch (error) {
                 this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
                 await onSignout().then(() => this.props.navigation.navigate('SignedOut'))
@@ -55,6 +57,16 @@ class Home extends React.PureComponent {
         } catch (error) {
             this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
             await onSignout().then(() => this.props.navigation.navigate('SignedOut'))
+        }
+    }
+
+    getEvents = async () => {
+        let response: object;
+        try {
+            response = await api.get('/test/events/list');
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -83,11 +95,10 @@ class Home extends React.PureComponent {
 
     render() {
         return (
-            <View>
-                <Text>Home</Text>
+            <Card>
                 {this.showSpinner()}
                 {this.showAlert()}
-            </View>
+            </Card>
         )
     }
 }
