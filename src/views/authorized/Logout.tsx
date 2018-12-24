@@ -32,20 +32,6 @@ class Logout extends React.PureComponent {
         };
     };
 
-    state = {
-        logout: false
-    }
-
-    logout = async () => {
-        try {
-            await AsyncStorage.removeItem('@Blueticket:token');
-            this.setState({ logout: true })
-        }
-        catch (exception) {
-            return false;
-        }
-    }
-
     render() {
         return (
             <Card>

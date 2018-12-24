@@ -2,7 +2,11 @@ import { AsyncStorage } from "react-native";
 
 export const onSignIn = (token: string) => AsyncStorage.setItem('@Blueticket:token', token);
 
-export const onSignout = () => AsyncStorage.removeItem('@Blueticket:token');
+export const onSignout = () => AsyncStorage.multiRemove([
+    '@Blueticket:token',
+    '@Blueticket:pdv',
+    '@Blueticket:pos'
+]) 
 
 export const isSignedIn = () => {
     return new Promise((resolve, reject) => {
