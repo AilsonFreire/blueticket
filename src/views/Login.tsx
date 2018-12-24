@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
+import { Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Input from '../components/Input';
@@ -7,14 +7,18 @@ import Card from '../components/Card';
 import CardSection from '../components/CardSection';
 import Text from '../components/Text';
 import Button from '../components/Button';
+import Alert from '../components/Alert';
 
 import api from '../services/api';
-import { validateEmail, validatePassword } from '../helpers/Validate'
+import { validateEmail, validatePassword, validateLogin } from '../helpers/Validate'
 
 const logo = require('../assets/images/logo.png');
 const blueticket = require('../assets/images/blueticket.png')
 
-class Login extends React.PureComponent {
+type Props = {
+    response: object;
+}
+class Login extends React.PureComponent<Props> {
     static navigationOptions = {
         header: null,
     };
@@ -54,32 +58,26 @@ class Login extends React.PureComponent {
     showAlert = () => {
         if (this.state.alert) {
             return (
-                Alert.alert(
-                    'Blueticket',
-                    `${this.state.msgAlert}`,
-                    [
-                        { text: 'OK', onPress: () => this.setState({ alert: false, msgAlert: '' }) },
-                    ],
-                    { cancelable: false }
-                )
+                <Alert onPress={() => this.setState({ alert: false })} msg={this.state.msgAlert} />
             )
         }
     }
 
     validateLogin = () => {
         const { email, password, msgErrorEmail, msgErrorPassword } = this.state;
-        if (email === '' || password === '') {
-            this.setState({ alert: true, msgAlert: 'Preencha todos os campos' })
-        } else if (msgErrorEmail !== '' || msgErrorPassword !== '') {
-            this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente' })
+
+        const validate = validateLogin(email, password, msgErrorEmail, msgErrorPassword);
+        if (!validate) {
+            this.setState({ alert: true, msgAlert: 'Preencha todos os campos corretamente ' });
         } else {
             this.login(email, password);
         }
     }
 
     login = async (email: string, password: string) => {
+        let response: object
         try {
-            const response = await api.post('/auth/login', {
+            response = await api.post('/auth/login', {
                 email,
                 password
             });
