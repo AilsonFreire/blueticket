@@ -2,7 +2,7 @@ import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import Login from "./views/Login";
 import Home from "./views/authorized/Home";
 import Logout from "./views/authorized/Logout";
-
+import Report from "./views/authorized/Report"
 
 export const UnauthorizedScreens = createStackNavigator(
     {
@@ -16,6 +16,7 @@ export const AuthorizedScreens = createStackNavigator(
     {
         Home,
         Logout,
+        Report
     },{
         initialRouteName: "Home"
     }

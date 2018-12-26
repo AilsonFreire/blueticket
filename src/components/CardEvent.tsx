@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TextInput, TouchableOpacity } from 'react-native';
-import CardSection from './CardSection';
+import { View, TextInput } from 'react-native';
+import Button from './Button';
 import Text from './Text'
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
     date: string,
     name: string,
     local: string,
-    descrption: string
+    descrption: string,
+    onPress: (() => void)
 }
 
 export default (props: Props) => {
@@ -50,8 +51,22 @@ export default (props: Props) => {
                     fontFamily: 'Ubuntu-Regular',
                 }}
                     multiline
-                    // numberOfLines={4}
-                    // maxLength={250}
+                />
+            </View>
+
+            <View style={{ alignItems: 'center', paddingBottom: 5 }}>
+                <Button
+                    addStyle={{ flex: 0 }}
+                    onPress={props.onPress}
+                    text="RELATÓRIO"
+                    styleText={{
+                        fontSize: 16,
+                        color: '#fff',
+                        paddingTop: 10,
+                        paddingBottom: 10,
+                        alignSelf: 'center',
+                        fontFamily: 'Ubuntu-Medium',
+                    }}
                 />
             </View>
 

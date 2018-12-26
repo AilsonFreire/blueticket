@@ -97,7 +97,6 @@ class Home extends React.PureComponent {
 
     renderEvents = () => {
         const { events } = this.state;
-        console.log(events)
         if (events.length > 0) {
             return (
                 events.map((event: object) => {
@@ -110,6 +109,7 @@ class Home extends React.PureComponent {
                             local={event.local}
                             date={date.toDateString()}
                             descrption={description}
+                            onPress={() => this.props.navigation.navigate('Report', { event_id: event.codigo })}
                         />
                     )
                 })
