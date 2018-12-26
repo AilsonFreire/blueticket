@@ -38,7 +38,11 @@ class Report extends React.PureComponent {
         report: null
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.fetchReport(1);
+    }
+
+    fetchReport = async (value: number) => {
         const { navigation } = this.props;
         const event_id = navigation.getParam('event_id', 'NO-ID');
 
@@ -47,7 +51,7 @@ class Report extends React.PureComponent {
         try {
             const pdv = JSON.parse(await AsyncStorage.getItem('@Blueticket:pdv'));
             try {
-                response = await api.get(`/test/reports/daily/${pdv[0].codigo_ponto_venda}/${event_id}/1`);
+                response = await api.get(`/test/reports/daily/${pdv[0].codigo_ponto_venda}/${event_id}/${value}`);
                 this.setState({ report: response.data, loading: false });
             } catch (error) {
                 this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
