@@ -5,8 +5,9 @@ Aplicativo feito em React-native usando typescript como requisito para a seleç�
 
 ## :star: Features
 
-- Seamlessly integrated into the React Native CLI! :sparkles:
-- Consistent with the default React Native template
+- Tela de login com os campos passando por validação:sparkles:
+- Mensagens abaixo dos inputs instruindo o usuario sobre o preenchimento
+- Opção de visualizar/esconder senha
 - Always latest dependencies :raised_hands:
 
 ## :arrow_forward: Quick Start
