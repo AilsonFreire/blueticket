@@ -24,16 +24,13 @@ Aplicativo feito em React-native usando typescript como requisito para a seleç�
 - Para navegar na aplicação, o usuário deve estar autenticado, portanto, deve-se verificar se o tempo de sessão ainda está ativo, e quando for inativo, o usuário deve ser deslogado e levado novamente para a tela de login :police_car:
 - O usuário deve ser capaz de visualizar a lista de eventos associados ao login :eyes:
 - Ao selecionar um evento deve ser exibido um relatório com as seguintes informações :bookmark_tabs:
+    o Total de ingressos
+    o Total de receita
+    o Receita por dia
+    o Filtro de data (7 dias, 15 dias, 30 dias, intervalo livre) sendo 7 dias o padrão.
+- O aplicativo deve ser desenvolvido com react native :iphone: 
 
-o Total de ingressos
 
-o Total de receita
+## :x: Item do desafio não cumprido (tempo apertado) :disappointed_relieved: 
 
-o Receita por dia
-
-o Filtro de data (7 dias, 15 dias, 30 dias, intervalo livre) sendo 7 dias o padrão.
-
-o Lista agrupada dos produtos vendidos, mostrando sua quantia e receita.
-
-* O aplicativo deve ser desenvolvido com react native
-
+- Lista agrupada dos produtos vendidos, mostrando sua quantia e receita.
