@@ -7,7 +7,7 @@ import api from '../../services/api';
 import Card from '../../components/Card';
 import HeaderLogo from '../../components/HeaderLogo';
 import Loading from '../../components/Loading';
-import Text from '../../components/Text';
+import CardReport from '../../components/CardReport';
 
 class Report extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
@@ -85,54 +85,26 @@ class Report extends React.PureComponent {
     renderReport = () => {
         const { report } = this.state;
         if (report !== null) {
-            const { labels, chartData } = report;
-            if (labels.length !== 0 && chartData.length !== 0) {
-                for (let i = 0; i <= labels.length; i++) {
-                    for (let j = 0; j <= chartData.length; j++) {
-                        return (
-                            <View style={{ flexDirection: 'column', alignItems: 'center', paddingBottom: 5 }}>
-                                <Text text={`Receita do dia : ${labels[i]}`} styleText={{ fontSize: 20, color: '#FFF' }} />
-                                <Text text={`R$: ${chartData[j]}`} styleText={{ fontSize: 15, color: '#FFF' }} />
-                            </View>
-                        )
-                    }
-                }
+            const { labels, chartData, tickets, revenue } = report;
+            if (labels.length > 0 && chartData.length > 0) {
+                return (
+                    <CardReport
+                        labels={labels}
+                        chartData={chartData}
+                        tickets={tickets}
+                        revenue={revenue}
+                    />
+                );
             }
         }
     }
 
     render() {
-        const { report } = this.state;
         return (
             <Card addStyle={{ justifyContent: 'flex-start', paddingHorizontal: 10 }}>
                 {this.showSpinner()}
                 <ScrollView style={{ width: '100%' }}>
-                    <View
-                        style={{
-                            width: '100%',
-                            elevation: 8,
-                            marginVertical: 5,
-                            paddingVertical: 10,
-                            borderRadius: 10,
-                            backgroundColor: '#006cb7',
-                            alignItems: 'center'
-                        }}>
-                        {this.renderReport()}
-                        {report !== null ?
-                            <View>
-                                <View style={{ flexDirection: 'column', alignItems: 'center', paddingBottom: 5 }}>
-                                    <Text text="Total de ingressos:" styleText={{ fontSize: 20, color: '#FFF' }} />
-                                    <Text text={report.tickets} styleText={{ fontSize: 15, color: '#FFF' }} />
-                                </View>
-
-                                <View style={{ flexDirection: 'column', alignItems: 'center', paddingBottom: 5 }}>
-                                    <Text text="Receita total:" styleText={{ fontSize: 20, color: '#FFF' }} />
-                                    <Text text={report.revenue} styleText={{ fontSize: 15, color: '#FFF' }} />
-                                </View>
-                            </View>
-                            : null
-                        }
-                    </View>
+                    {this.renderReport()}
                 </ScrollView>
                 {this.showAlert()}
             </Card>
