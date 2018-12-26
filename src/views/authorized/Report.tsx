@@ -8,7 +8,9 @@ import Card from '../../components/Card';
 import HeaderLogo from '../../components/HeaderLogo';
 import Loading from '../../components/Loading';
 import CardReport from '../../components/CardReport';
-
+import Text from '../../components/Text';
+import CardSection from '../../components/CardSection';
+import Button from '../../components/Button';
 class Report extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
         const { goBack } = navigation;
@@ -106,6 +108,48 @@ class Report extends React.PureComponent {
     render() {
         return (
             <Card addStyle={{ justifyContent: 'flex-start', paddingHorizontal: 10 }}>
+                <Text text="RELATÓRIOS" styleText={{ fontSize: 20 }} />
+                <CardSection>
+                    <Button 
+                        onPress={() => this.fetchReport(7)}
+                        addStyle={{ marginHorizontal: 5 }}
+                        text="Últimos 7 dias"
+                        styleText={{
+                            fontSize: 12,
+                            color: '#fff',
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            alignSelf: 'center',
+                            fontFamily: 'Ubuntu-Medium',
+                        }}
+                    />
+                     <Button 
+                        onPress={() => this.fetchReport(15)}
+                        addStyle={{ marginHorizontal: 5 }}
+                        text="Últimos 15 dias"
+                        styleText={{
+                            fontSize: 12,
+                            color: '#fff',
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            alignSelf: 'center',
+                            fontFamily: 'Ubuntu-Medium',
+                        }}
+                    />
+                     <Button 
+                        onPress={() => this.fetchReport(30)}
+                        addStyle={{ marginHorizontal: 5 }}
+                        text="Últimos 30 dias"
+                        styleText={{
+                            fontSize: 12,
+                            color: '#fff',
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            alignSelf: 'center',
+                            fontFamily: 'Ubuntu-Medium',
+                        }}
+                    />
+                </CardSection>
                 {this.showSpinner()}
                 <ScrollView style={{ width: '100%' }}>
                     {this.renderReport()}

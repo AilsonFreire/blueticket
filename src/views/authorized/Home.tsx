@@ -10,6 +10,7 @@ import Card from '../../components/Card';
 import CardEvent from '../../components/CardEvent';
 import HeaderLogo from '../../components/HeaderLogo';
 import Loading from '../../components/Loading';
+import Text from '../../components/Text';
 
 class Home extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {
@@ -120,6 +121,7 @@ class Home extends React.PureComponent {
     render() {
         return (
             <Card addStyle={{ justifyContent: 'flex-start', paddingHorizontal: 10 }}>
+                <Text text="EVENTOS" styleText={{ fontSize: 20 }} />
                 {this.showSpinner()}
                 <ScrollView style={{ width: '100%' }}>
                     {this.renderEvents()}
