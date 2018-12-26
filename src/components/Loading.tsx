@@ -1,35 +1,43 @@
 import React from 'react';
-import { View, Image } from 'react-native';
-import Spinner from 'react-native-spinkit';
-
-const logo = require('../assets/images/logo.png')
-
+import { View, ActivityIndicator  } from 'react-native';
 
 export default () => {
     return (
         <View
-            style={{
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                flex: 1,
-                zIndex: 10,
-                elevation: 8,
-                position: 'absolute',
-                alignItems: 'center',
-                flexDirection: 'column',
-                justifyContent: 'center',
-            }}
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            flex: 1,
+            zIndex: 10,
+            elevation: 8,
+            position: 'absolute',
+            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
         >
+          <View
+            style={{
+              width: 100,
+              height: 100,
+              elevation: 8,
+              marginTop: 35,
+              borderRadius: 5,
+              backgroundColor: '#FFF'
+            }}
+          >
             <View
-                style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
-                <Spinner style={{ marginBottom: 50 }} isVisible size={120} type={'ChasingDots'} color={"#002a53"} />
+              <ActivityIndicator size={'large'} color={'#2A4065'} />
             </View>
+          </View>
         </View>
-    );
+      );
 }
