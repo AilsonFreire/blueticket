@@ -17,6 +17,7 @@ Aplicativo feito em React-native usando typescript como requisito para a seleç�
 - Escrever testes unitários :pencil2:
 - Escrever testes de integração :pencil2:
 - Layout mais bonito visualmente :eyes:
+- Tratamento do texto da descrição dos eventos vindos do servidor :pencil2:
 
 ## :heavy_check_mark: Itens do desafio cumpridos
 
