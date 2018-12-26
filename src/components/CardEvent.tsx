@@ -8,7 +8,7 @@ type Props = {
     date: string,
     name: string,
     local: string,
-    // descrption: string
+    descrption: string
 }
 
 export default (props: Props) => {
@@ -38,6 +38,21 @@ export default (props: Props) => {
             <View style={{ flexDirection: 'column', alignItems: 'center', paddingBottom: 5 }}>
                 <Text text="Data:" styleText={{ fontSize: 20, color: '#FFF' }} />
                 <Text text={props.date} styleText={{ fontSize: 15, color: '#FFF' }} />
+            </View>
+
+            <View style={{ flexDirection: 'column', alignItems: 'center', paddingBottom: 5 }}>
+                <Text text="Decrição:" styleText={{ fontSize: 20, color: '#FFF' }} />
+                <TextInput value={props.descrption} style={{
+                    fontSize: 14,
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    color: '#FFF',
+                    fontFamily: 'Ubuntu-Regular',
+                }}
+                    multiline
+                    // numberOfLines={4}
+                    // maxLength={250}
+                />
             </View>
 
         </View>

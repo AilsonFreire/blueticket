@@ -102,13 +102,14 @@ class Home extends React.PureComponent {
             return (
                 events.map((event: object) => {
                     const date = new Date(event.data * 1000);
-                    console.log(date)
+                    const description = event.descricao.replace(/[^\r\n\w\s]/gi, '')
                     return (
                         <CardEvent
                             key={event.codigo}
                             name={event.nome}
                             local={event.local}
                             date={date.toDateString()}
+                            descrption={description}
                         />
                     )
                 })
