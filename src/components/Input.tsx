@@ -1,39 +1,35 @@
 import React from 'react';
 import { TextInput, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Entypo';
 
 type Props = {
     onChangeText: ((text: string) => void);
-    onBlur?: (() => void);
     placeholder?: string;
     secureTextEntry?: boolean;
     value?: string;
     editable?: boolean;
     keyboardType?: any | "default",
     maxLength?: number,
-    addViewStyle?: object, 
     addStyle?: object,
-    icon?: any,
-    color?: string
+    icon?: any
 }
 
 export default (props: Props) => {
     return (
-        <View style={[{
+        <View style={{
             flex: 1,
             padding: 5,
             elevation: 8,
             borderRadius: 5,
             borderColor: '#FFF',
             flexDirection: 'row',
-            backgroundColor: '#FFF'
-            }, props.addViewStyle ]}>
+            backgroundColor: '#FFF',
+        }}>
             <TextInput
                 value={props.value}
                 editable={props.editable}
                 autoCorrect={false}
                 placeholder={props.placeholder}
-                onBlur={props.onBlur}
                 onChangeText={props.onChangeText}
                 keyboardType={props.keyboardType}
                 underlineColorAndroid='transparent'
@@ -45,7 +41,7 @@ export default (props: Props) => {
                         paddingLeft: 20,
                         paddingRight: 20,
                         color: '#2D2D2D',
-                        fontFamily: 'Ubuntu-Regular',
+                        fontFamily: 'Ubuntu-Regular'
                     }, props.addStyle]}
             />
             <View
@@ -57,9 +53,12 @@ export default (props: Props) => {
                     backgroundColor: '#FFF',
                 }}
             >
-                <Icon
-                    name={props.icon}
-                    color={props.color}
+                <Ico
+                
+                
+                
+                n
+                    name='home'
                     size={25}
                 />
             </View>

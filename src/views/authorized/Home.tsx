@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Alert, AsyncStorage, ScrollView } from 'react-native';
+import { TouchableOpacity, Alert, AsyncStorage, ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import api from '../../services/api';
@@ -36,6 +36,7 @@ class Home extends React.PureComponent {
 
     state = {
         events: [],
+        totalRevenue: '',
         loading: true,
         alert: false,
         msgAlert: ''
@@ -67,9 +68,32 @@ class Home extends React.PureComponent {
         try {
             response = await api.get('/test/events/list');
             this.setState({ events: response.data, loading: false })
+            this.fetchDetailEvent();
         } catch (error) {
             this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
             await onSignout().then(() => this.props.navigation.navigate('SignedOut'));
+        }
+    }
+
+    fetchDetailEvent = async () => {
+        const { events } = this.state;
+        if(events.length > 0) {
+            let response: object;
+            events.map(async event => {
+                try {
+                    const pdv = JSON.parse(await AsyncStorage.getItem('@Blueticket:pdv'));
+                    try {
+                        response = await api.get(`/test/reports/daily/${pdv[0].codigo_ponto_venda}/${event.codigo}/1`);
+                        this.setState({ totalRevenue: this.state.totalRevenue + response.data.revenue });
+                    } catch (error) {
+                        this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
+                        this.props.navigation.navigate('Home');
+                    }
+                } catch (error) {
+                    this.setState({ alert: true, msgAlert: 'Não foi possível conectar com o servidor, tente novamente!', loading: false });
+                    this.props.navigation.navigate('Home');
+                }
+            })
         }
     }
 
@@ -127,6 +151,10 @@ class Home extends React.PureComponent {
                     {this.renderEvents()}
                 </ScrollView>
                 {this.showAlert()}
+                <View style={{ padding: 15,   backgroundColor: '#006cb7', borderRadius: 10,  width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <Text text={'Total: '} styleText={{ fontSize: 20, color: '#FFFF'}} />
+                    <Text text={`${this.state.totalRevenue}`} styleText={{ fontSize: 20, color: '#FFFF'}} />
+                </View>
             </Card>
         )
     }
